@@ -11,3 +11,25 @@ const wordList = ['cloned', 'serum', 'grafts', 'stitch', 'molar', 'socket', 'spl
 const day1 = new Date(2023, 8, 15, 12, 0, 0);
 // 86400000 is number of ms in 1 day
 const currentWord = wordList[Math.floor((Date.now() - day1) / 86400000)];
+const wordLength = currentWord.length;
+const gridSize = wordLength * 6;
+
+
+window.addEventListener('load', () => {
+    makeTiles(6, wordLength);
+})
+
+function makeTiles(row, col) {
+    const grid = document.getElementById('game-grid');
+    // adds extra column when word is six characters instead of 5
+    if(col === 6) {
+        grid.style.gridTemplateColumns = 'repeat(6, 62px)';
+    };
+    for(i = 0; i < (row * col); i++) {
+        let rowNum = Math.floor(i / col);
+        let tile = document.createElement('div');
+        tile.setAttribute('id', i);
+        tile.setAttribute('class', `game-tile row${rowNum}`);
+        grid.appendChild(tile);
+    };
+}
