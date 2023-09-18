@@ -1,7 +1,7 @@
 /*
 Title: MedWordle
 Description: Wordle with medical terms
-Last Updated: Sep 13, 2023
+Last Updated: Sep 18, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -26,9 +26,11 @@ main {
 
 #game {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 20px 20px 0 20px;
 }
 
 #game-grid {
@@ -43,4 +45,58 @@ main {
     width: 60px;
     height: 60px;
     border: solid 2px black;
+    border-radius: 5px;
+}
+
+#keyboard {
+    width: 460px;
+    height: 180px;
+    margin-top: 20px;
+    background-color: tan;
+    display: grid;
+    grid-template-rows: 3;
+    gap: 2px;
+    padding: 2px;
+}
+
+#kb-1 {
+    grid-row: 1/2;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2px;
+}
+
+#kb-2 {
+    grid-row: 2/3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    gap: 2px;
+}
+
+#kb-3 {
+    grid-row: 3/4;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    gap: 2px;
+}
+
+.key {
+    width: 40px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+button {
+    background-color: yellow;
+    border-radius: 5px;
+}
+
+#enter, #del {
+    width: 80px;
 }

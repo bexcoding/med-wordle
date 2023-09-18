@@ -1,7 +1,7 @@
 /*
 Title: MedWordle
 Description: Wordle with medical terms
-Last Updated: Sep 15, 2023
+Last Updated: Sep 18, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -13,11 +13,26 @@ const day1 = new Date(2023, 8, 15, 12, 0, 0);
 const currentWord = wordList[Math.floor((Date.now() - day1) / 86400000)];
 const wordLength = currentWord.length;
 const gridSize = wordLength * 6;
+const first = currentWord[0];
+const second = currentWord[1];
+const third = currentWord[2];
+const fourth = currentWord[3];
+const fifth = currentWord[4];
+const sixth = currentWord[5];
+const letters = [];
+// remove rows?
+const row1 = ['Q', 'W', 'E', 'R', 'T', 'U', 'I', 'O', 'P'];
+const row2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
+const row3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
 
 
 window.addEventListener('load', () => {
     makeTiles(6, wordLength);
-})
+    // make letter list for all letters in the word
+    for(i in currentWord){
+        letters.push(currentWord[i]);
+    };
+});
 
 function makeTiles(row, col) {
     const grid = document.getElementById('game-grid');
