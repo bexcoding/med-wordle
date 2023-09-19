@@ -20,10 +20,11 @@ const fourth = currentWord[3];
 const fifth = currentWord[4];
 const sixth = currentWord[5];
 const letters = [];
-// remove rows?
-const row1 = ['Q', 'W', 'E', 'R', 'T', 'U', 'I', 'O', 'P'];
-const row2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
-const row3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
+let currentRow = 0;
+let currentGuess = "";
+let currentGuessLength = 0;
+let currentGuessId = 0;
+let totalGuesses = 1;
 
 
 window.addEventListener('load', () => {
@@ -47,4 +48,62 @@ function makeTiles(row, col) {
         tile.setAttribute('class', `game-tile row${rowNum}`);
         grid.appendChild(tile);
     };
+}
+
+
+function addLetter(letter) {
+    if(currentGuessLength < wordLength) {
+        document.getElementById(currentGuessId).innerHTML = letter.toUpperCase();
+        currentGuess += letter;
+        currentGuessLength += 1;
+        currentGuessId += 1;
+        console.log(currentGuess)
+    } else {
+        console.log('word too long')
+    }
+}
+
+
+function subtractLetter() {
+    if(currentGuessLength > 0) {
+        currentGuessId -= 1;
+        currentGuessLength -= 1;
+        currentGuess = currentGuess.slice(0, -1);
+        document.getElementById(currentGuessId).innerHTML = "";
+    };
+}
+
+
+function checkAnswer(guess) {
+    // valid guess length
+    if(guess.length === wordLength) {
+        // correct word
+        if(guess === currentWord) {
+            console.log(`number of guesses ${totalGuesses}`)
+            showWord();
+        // incorrect word
+        } else {
+            currentGuess = "";
+            currentGuessLength = 0;
+            totalGuesses += 1;
+            for(i in guess) {
+                // letter present
+                if(letters.includes(guess[i])) {
+                    console.log('included');
+                // letter not present
+                } else {
+                    console.log('not included')
+                };
+            };
+        };
+    // guess length too short
+    } else {
+        console.log('not enough letters')
+    }
+
+}
+
+
+function showWord() {
+    console.log('show the word')
 }

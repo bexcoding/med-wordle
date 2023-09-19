@@ -43,9 +43,14 @@ main {
 
 .game-tile {
     width: 60px;
-    height: 60px;
+    height: 45px;
     border: solid 2px black;
     border-radius: 5px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 15px;
+    background-color: white;
 }
 
 #keyboard {
