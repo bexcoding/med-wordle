@@ -35,6 +35,8 @@ window.addEventListener('load', () => {
     };
 });
 
+
+
 function makeTiles(row, col) {
     const grid = document.getElementById('game-grid');
     // adds extra column when word is six characters instead of 5
@@ -77,29 +79,45 @@ function subtractLetter() {
 function checkAnswer(guess) {
     // valid guess length
     if(guess.length === wordLength) {
+        let startId = wordLength * currentRow;
+        currentGuess = "";
+        currentGuessLength = 0;
+        for(i in guess) {
+            let currentItem = document.getElementById((Number(i) + startId));
+            let currentKey = document.getElementById(guess[i]);
+            console.log((Number(i) + startId))
+            if(guess[i] === currentWord[i]){
+                // letter is correct
+                setTimeout(() => {
+                    currentItem.style.backgroundColor = 'green';
+                    currentKey.style.backgroundColor = 'green';
+                }, (Number(i) * 750));
+            } else if(letters.includes(guess[i])){
+                // letter present
+                setTimeout(() => {
+                    currentItem.style.backgroundColor = 'yellow';
+                    currentKey.style.backgroundColor = 'yellow';
+                }, (Number(i) * 750));
+            } else {
+                // letter not present
+                setTimeout(() => {
+                    currentItem.style.backgroundColor = 'gray';
+                    currentKey.setAttribute('disabled', 'true');
+                    currentKey.style.backgroundColor = 'gray';
+                }, (Number(i) * 750));
+            };
+        };
         // correct word
         if(guess === currentWord) {
             console.log(`number of guesses ${totalGuesses}`)
             showWord();
-        // incorrect word
-        } else {
-            currentGuess = "";
-            currentGuessLength = 0;
-            totalGuesses += 1;
-            for(i in guess) {
-                // letter present
-                if(letters.includes(guess[i])) {
-                    console.log('included');
-                // letter not present
-                } else {
-                    console.log('not included')
-                };
-            };
         };
+        currentRow += 1;
+        totalGuesses += 1;
     // guess length too short
     } else {
         console.log('not enough letters')
-    }
+    };
 
 }
 
