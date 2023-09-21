@@ -35,7 +35,15 @@ window.addEventListener('load', () => {
     };
 });
 
-
+window.addEventListener('keydown', (event) => {
+    if(event.key === 'Backspace') {
+        subtractLetter();
+    } else if(event.key === 'Enter') {
+        checkAnswer(currentGuess);
+    } else if(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'].includes(event.key)) {
+        addLetter(event.key);
+    };
+});
 
 function makeTiles(row, col) {
     const grid = document.getElementById('game-grid');
@@ -59,7 +67,6 @@ function addLetter(letter) {
         currentGuess += letter;
         currentGuessLength += 1;
         currentGuessId += 1;
-        console.log(currentGuess)
     } else {
         console.log('word too long')
     }
@@ -85,7 +92,6 @@ function checkAnswer(guess) {
         for(i in guess) {
             let currentItem = document.getElementById((Number(i) + startId));
             let currentKey = document.getElementById(guess[i]);
-            console.log((Number(i) + startId))
             if(guess[i] === currentWord[i]){
                 // letter is correct
                 setTimeout(() => {
