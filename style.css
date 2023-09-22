@@ -51,6 +51,7 @@ main {
     font-weight: bold;
     padding-top: 15px;
     background-color: white;
+    align-self: center;
 }
 
 #keyboard {
