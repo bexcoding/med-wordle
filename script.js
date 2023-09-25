@@ -14,6 +14,7 @@ const currentWord = wordList[Math.floor((Date.now() - day1) / 86400000)];
 const wordLength = currentWord.length;
 const gridSize = wordLength * 6;
 const letters = [];
+let gameWon = false;
 let currentRow = 0;
 let currentGuess = "";
 let currentGuessLength = 0;
@@ -56,14 +57,16 @@ function makeTiles(row, col) {
 
 
 function addLetter(letter) {
-    if(currentGuessLength < wordLength) {
+    if(gameWon) {
+        console.log('game over; keyboard deactivated');
+    } else if(currentGuessLength < wordLength) {
         document.getElementById(currentGuessId).innerHTML = letter.toUpperCase();
         currentGuess += letter;
         currentGuessLength += 1;
         currentGuessId += 1;
     } else {
         console.log('word too long')
-    }
+    };
 }
 
 
@@ -109,7 +112,7 @@ function checkAnswer(guess) {
         // correct word
         if(guess === currentWord) {
             console.log(`number of guesses ${totalGuesses}`)
-            showWord();
+            endGame();
         };
         currentRow += 1;
         totalGuesses += 1;
@@ -117,34 +120,13 @@ function checkAnswer(guess) {
     } else {
         console.log('not enough letters')
     };
-
 }
 
 
-function showWord() {
-    console.log('show the word')
+function endGame() {
+    gameWon = true;
+    let keys = document.getElementsByClassName('key');
+    for(i in keys) {
+        keys[i].setAttribute('disabled', 'true');
+    };
 }
-
-/*
-function animate(id) {
-    let h = 44;
-    let increase = false;
-    let animation = setInterval(() => {
-        if(increase) {
-            if(h < 45) {
-                h += 1;
-            } else {
-                clearInterval(animation);
-            }
-        } else {
-            if(h > 0) {
-                h -= 1;
-            } else {
-                h += 1;
-                increase = true;
-            }
-        };
-        document.getElementById(id).style.height = `${h}px`;
-    }, 10);
-}
-*/
