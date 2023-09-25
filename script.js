@@ -1,7 +1,7 @@
 /*
 Title: MedWordle
 Description: Wordle with medical terms
-Last Updated: Sep 21, 2023
+Last Updated: Sep 25, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -89,20 +89,20 @@ function checkAnswer(guess) {
             if(guess[i] === currentWord[i]){
                 // letter is correct
                 setTimeout(() => {
-                    currentItem.style.backgroundColor = 'green';
-                    currentKey.style.backgroundColor = 'green';
+                    currentItem.style.backgroundColor = 'var(--green)';
+                    currentKey.style.backgroundColor = 'var(--green)';
                 }, (Number(i) * 750));
             } else if(letters.includes(guess[i])){
                 // letter present
                 setTimeout(() => {
-                    currentItem.style.backgroundColor = 'yellow';
-                    currentKey.style.backgroundColor = 'yellow';
+                    currentItem.style.backgroundColor = 'var(--yellow)';
+                    currentKey.style.backgroundColor = 'var(--yellow)';
                 }, (Number(i) * 750));
             } else {
                 // letter not present
                 setTimeout(() => {
-                    currentItem.style.backgroundColor = 'gray';
-                    currentKey.style.backgroundColor = 'gray';
+                    currentItem.style.backgroundColor = 'var(--gray1)';
+                    currentKey.style.backgroundColor = 'var(--gray1)';
                 }, (Number(i) * 750));
             };
         };
@@ -125,7 +125,7 @@ function showWord() {
     console.log('show the word')
 }
 
-
+/*
 function animate(id) {
     let h = 44;
     let increase = false;
@@ -147,3 +147,4 @@ function animate(id) {
         document.getElementById(id).style.height = `${h}px`;
     }, 10);
 }
+*/
