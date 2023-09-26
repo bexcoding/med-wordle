@@ -1,7 +1,7 @@
 /*
 Title: MedWordle
 Description: Wordle with medical terms
-Last Updated: Sep 25, 2023
+Last Updated: Sep 26, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -12,14 +12,12 @@ const day1 = new Date(2023, 8, 15, 12, 0, 0);
 // 86400000 is number of ms in 1 day
 const currentWord = wordList[Math.floor((Date.now() - day1) / 86400000)];
 const wordLength = currentWord.length;
-const gridSize = wordLength * 6;
 const letters = [];
 let gameWon = false;
 let currentRow = 0;
 let currentGuess = "";
 let currentGuessLength = 0;
 let currentGuessId = 0;
-let totalGuesses = 1;
 
 
 window.addEventListener('load', () => {
@@ -64,9 +62,7 @@ function addLetter(letter) {
         currentGuess += letter;
         currentGuessLength += 1;
         currentGuessId += 1;
-    } else {
-        console.log('word too long')
-    };
+    } 
 }
 
 
@@ -111,11 +107,11 @@ function checkAnswer(guess) {
         };
         // correct word
         if(guess === currentWord) {
-            console.log(`number of guesses ${totalGuesses}`)
-            endGame();
+            gameWon = true;
+            setTimeout(showWin, 3500);
+            setTimeout(hideWin, 5500);
         };
         currentRow += 1;
-        totalGuesses += 1;
     // guess length too short
     } else {
         console.log('not enough letters')
@@ -123,10 +119,27 @@ function checkAnswer(guess) {
 }
 
 
-function endGame() {
-    gameWon = true;
-    let keys = document.getElementsByClassName('key');
-    for(i in keys) {
-        keys[i].setAttribute('disabled', 'true');
-    };
+function showWin() {
+    const message = document.getElementById('win');
+    let x = 0;
+    let messageTimer = setInterval(() => {
+        x += 1;
+        message.style.opacity = `${x}%`
+        if(x >= 100) {
+            clearInterval(messageTimer);
+        }
+    }, 5);
+}
+
+
+function hideWin() {
+    const message = document.getElementById('win');
+    let x = 100;
+    let messageTimer = setInterval(() => {
+        x -= 1;
+        message.style.opacity = `${x}%`
+        if(x <= 0) {
+            clearInterval(messageTimer);
+        }
+    }, 5);
 }
