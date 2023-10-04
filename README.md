@@ -9,3 +9,4 @@ Wordle with medical terms
 - how to store word list?
 - added keyboard; wanted to generate on load so no hard coded buttons but it was complicated by enter and delete button
 - trying to add animation. can get it to work but it doesnt want to do all squares. it glitches and only moves one square.
+- generalized message showing animation

@@ -9,11 +9,24 @@
   </head>
   <body>
     <header>
-      <h1>MedWordle</h1>
+      <h1 id="title">MedWordle</h1>
+      <div id="question" onclick="showHowTo()">?</div>
     </header>
     <main>
       <div id="game">
         <div id="message"></div>
+        <div id="howto">
+          <div id="closeHowto" onclick="hideHowTo()">X</div>
+          <div id="instructions">
+            <h2>How To Play</h2>
+            <p>You have 6 tries to guess the hidden word.</p>
+            <p>Each guess must use all of the available space.</p>
+            <p>The tiles will change color to show how close your guess was.</p>
+            <p>Grey = The letter isn't in the word.</p>
+            <p>Yellow = The letter is in the word but not in the correct space.</p>
+            <p>Green = The letter is in the word and in the correct space.</p>
+          </div>
+        </div>
         <div id="game-grid">
         </div>
         <div id="keyboard">
