@@ -12,7 +12,7 @@ const day1 = new Date(2023, 8, 15, 6, 0, 0);
 // 86400000 is number of ms in 1 day
 const currentWord = wordList[Math.floor((Date.now() - day1) / 86400000)];
 const wordLength = currentWord.length;
-const letters = [];
+let letters = [];
 let gameWon = false;
 let currentRow = 0;
 let currentGuess = "";
@@ -80,12 +80,19 @@ function checkAnswer(guess) {
     // valid guess length
     if(guess.length === wordLength) {
         let startId = wordLength * currentRow;
+        letters = [];
+        for(i in currentWord){
+            letters.push(currentWord[i]);
+        };
+
+            console.log(letters, 'letters')
         currentGuess = "";
         currentGuessLength = 0;
         for(i in guess) {
             let currentItem = document.getElementById((Number(i) + startId));
             let currentKey = document.getElementById(guess[i]);
             if(guess[i] === currentWord[i]){
+                letters[i] = '';
                 // letter is correct
                 setTimeout(() => {
                     currentItem.style.backgroundColor = 'var(--green)';
@@ -95,13 +102,17 @@ function checkAnswer(guess) {
                 // letter present
                 setTimeout(() => {
                     currentItem.style.backgroundColor = 'var(--yellow)';
-                    currentKey.style.backgroundColor = 'var(--yellow)';
+                    if(currentKey.style.backgroundColor != 'var(--green)') {
+                        currentKey.style.backgroundColor = 'var(--yellow)';
+                    }
                 }, (Number(i) * 750));
             } else {
                 // letter not present
                 setTimeout(() => {
                     currentItem.style.backgroundColor = 'var(--gray1)';
-                    currentKey.style.backgroundColor = 'var(--gray1)';
+                    if(currentKey.style.backgroundColor != 'var(--green)' && currentKey.style.backgroundColor != 'var(--yellow)') {
+                        currentKey.style.backgroundColor = 'var(--gray1)';
+                    }
                 }, (Number(i) * 750));
             };
         };
