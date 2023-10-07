@@ -1,7 +1,7 @@
 /*
 Title: MedWordle
 Description: Wordle with medical terms
-Last Updated: Oct 4, 2023
+Last Updated: Oct 6, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -14,6 +14,7 @@ const currentWord = wordList[Math.floor((Date.now() - day1) / 86400000)];
 const wordLength = currentWord.length;
 let letters = [];
 let gameWon = false;
+let gameLost = false;
 let currentRow = 0;
 let currentGuess = "";
 let currentGuessLength = 0;
@@ -21,13 +22,15 @@ let currentGuessId = 0;
 
 
 window.addEventListener('load', () => {
-    makeTiles(6, wordLength);
+    makeTiles(wordLength);
     // make letter list for all letters in the word
     for(i in currentWord){
         letters.push(currentWord[i]);
     };
 });
 
+
+// handle keypresses
 window.addEventListener('keydown', (event) => {
     if(event.key === 'Backspace') {
         subtractLetter();
@@ -38,35 +41,48 @@ window.addEventListener('keydown', (event) => {
     };
 });
 
-function makeTiles(row, col) {
+
+/**
+ * makes tiles where guessed letters appear
+ * @param {number} col - number of columns; either 5 or 6
+ */
+function makeTiles(col) {
     const grid = document.getElementById('game-grid');
     // adds extra column when word is six characters instead of 5
     if(col === 6) {
         grid.style.gridTemplateColumns = 'repeat(6, 62px)';
     };
-    for(i = 0; i < (row * col); i++) {
-        let rowNum = Math.floor(i / col);
+    for(i = 0; i < (6 * col); i++) {
         let tile = document.createElement('div');
         tile.setAttribute('id', i);
-        tile.setAttribute('class', `game-tile row${rowNum}`);
+        tile.setAttribute('class', 'game-tile');
         grid.appendChild(tile);
     };
 }
 
 
+/**
+ * adds letter to the gameboard
+ * @param {string} letter - the letter being guessed
+ */
 function addLetter(letter) {
-    if(gameWon) {
+    // only attempt to add letters if game is still going
+    if(gameWon || gameLost) {
         console.log('game over; keyboard deactivated');
     } else if(currentGuessLength < wordLength) {
         document.getElementById(currentGuessId).innerHTML = letter.toUpperCase();
         currentGuess += letter;
         currentGuessLength += 1;
         currentGuessId += 1;
-    } 
+    };
 }
 
 
+/**
+ * deletes letter from the gameboard
+ */
 function subtractLetter() {
+    // only subtracts letters if there are letters on the gameboard
     if(currentGuessLength > 0) {
         currentGuessId -= 1;
         currentGuessLength -= 1;
@@ -76,16 +92,19 @@ function subtractLetter() {
 }
 
 
+/**
+ * checks if the current guess is correct and updates board with hints
+ * @param {string} guess - the current guess being checked
+ */
 function checkAnswer(guess) {
     // valid guess length
     if(guess.length === wordLength) {
         let startId = wordLength * currentRow;
+        // reset list of letters in word for each guess
         letters = [];
         for(i in currentWord){
             letters.push(currentWord[i]);
         };
-
-            console.log(letters, 'letters')
         currentGuess = "";
         currentGuessLength = 0;
         for(i in guess) {
@@ -124,10 +143,12 @@ function checkAnswer(guess) {
             setTimeout(showMessage, 3500);
             setTimeout(hideMessage, 5500);
         } else if(currentRow === 6) {
+            gameLost = true;
+            // show correct word after game over
             document.getElementById('message').innerHTML = currentWord.toUpperCase();
             setTimeout(showMessage, 3500);
             setTimeout(hideMessage, 9000);
-        }
+        };
     // guess length too short
     } else {
         document.getElementById('message').innerHTML = 'Not Enough Letters';
@@ -137,6 +158,9 @@ function checkAnswer(guess) {
 }
 
 
+/**
+ * makes message box visible
+ */
 function showMessage() {
     const message = document.getElementById('message');
     let x = 0;
@@ -150,6 +174,9 @@ function showMessage() {
 }
 
 
+/**
+ * makes message box invisible
+ */
 function hideMessage() {
     const message = document.getElementById('message');
     let x = 100;
@@ -163,11 +190,17 @@ function hideMessage() {
 }
 
 
+/**
+ * makes game instructions visible
+ */
 function showHowTo() {
     document.getElementById('howto').style.opacity = '100%';
 }
 
 
+/**
+ * makes game instructions invisible
+ */
 function hideHowTo() {
     document.getElementById('howto').style.opacity = '0%';
 }
